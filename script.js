@@ -1,8 +1,9 @@
 const dayInput = document.getElementById("day");
 const monthInput = document.getElementById("month");
 const yearInput = document.getElementById("year");
+const calculateButton = document.getElementById("calc-btn");
 const today = new Date();
-
+const currentDay = today.getDay()
 
 
 
@@ -20,3 +21,4 @@ function integerInput(value) {
 yearInput.addEventListener("input", function(){
     this.value = integerInput(this.value).substring(0, 4);
 })
+
