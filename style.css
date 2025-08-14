@@ -141,11 +141,37 @@ hr {
     border: 0;
     height: 1px;
     background: var(--color-light-grey);
+    overflow: visible;
+    position: relative;
+
+    &::before {
+        content: "";
+        display: block;
+        width: 96px;
+        height: 96px;
+        background-color: var(--color-purple);
+        background-image: url("./assets/images/icon-arrow.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        position: absolute;
+        border-radius: 50%;
+        top: 0;
+        right: 0;
+        transform: translateY(-50%);
+    }
+}
+
+
+
+div.circle {
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .form-control {
     min-width: 0;
-    flex-shrink: 1;
+    flex: 0 1 160px;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-100);
