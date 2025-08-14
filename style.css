@@ -26,6 +26,7 @@
     --radius-250: 20px;
     --radius-300: 24px;
     --radius-350: 28px;
+    --radius-middle: 100px;
     --radius-large: 200px;
 
     /* Spacing */
@@ -100,7 +101,7 @@ input {
     line-height: 48px;
     letter-spacing: 0.01em;
     padding-block: 12px;
-    padding-inline-start: 24px;
+    padding-inline: 24px;
     border-radius: var(--radius-100);
     border: 1px solid var(--color-light-grey);
     outline: none;
@@ -146,23 +147,21 @@ p {
     }
 }
 
-
-
 hr {
     flex: 1;
     border: 0;
     height: 1px;
     background: var(--color-light-grey);
     overflow: visible;
-
 }
 .calculate {
     display: flex;
     align-items: center;
     height: auto;
     justify-content: space-between;
+    position: relative;
 }
-.calculate-btn{
+.calculate-btn {
     width: 96px;
     height: 96px;
     background-color: var(--color-purple);
@@ -175,13 +174,12 @@ hr {
     outline: none;
 
     &:active {
-        transform: scale(.95);
+        transform: scale(0.95);
         border: 1px solid var(--color-off-black);
         background-color: var(--color-purple-alpha);
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     }
 }
-
 
 .form-control {
     min-width: 0;
@@ -189,4 +187,46 @@ hr {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-100);
+}
+
+@media (max-width: 843px) {
+    .container {
+        max-width: 345px;
+        /* width: 343px; */
+        padding-inline: var(--spacing-300);
+        padding-block: var(--spacing-600);
+        border-bottom-right-radius: var(--radius-middle);
+    }
+
+    form {
+        gap: var(--spacing-200);
+    }
+
+    label {
+        font-size: 12px;
+    }
+
+    input {
+        font-size: 20px;
+        padding-inline: var(--spacing-200);
+        line-height: 30px;
+    }
+
+    p {
+        font-size: 56px;
+    }
+
+    .calculate-btn {
+        width: 64px;
+        height: 64px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform-origin: center center;
+        transform: translate(-50%, -50%);
+
+        &:active {
+         transform: translate(-50%, -50%) scale(0.95);
+        }
+    }
 }
