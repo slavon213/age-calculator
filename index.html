@@ -6,6 +6,7 @@
 
         <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png" />
         <link rel="stylesheet" href="./style.css" />
+
         <title>Frontend Mentor | Age calculator app</title>
     </head>
     <body>
@@ -14,23 +15,31 @@
                 <form>
                     <div class="form-control">
                         <label for="day">Day</label>
-                        <input type="text" name="day" id="day" placeholder="DD" inputmode="numeric" min="1" max="31"/>
+                        <input type="text" name="day" id="day" placeholder="DD" inputmode="numeric" min="1" max="31" />
                         <small></small>
                     </div>
                     <div class="form-control">
                         <label for="month">Month</label>
-                        <input type="text" name="month" id="month" placeholder="MM" inputmode="numeric" min="1" max="12">
+                        <input
+                            type="text"
+                            name="month"
+                            id="month"
+                            placeholder="MM"
+                            inputmode="numeric"
+                            min="1"
+                            max="12"
+                        />
                         <small></small>
                     </div>
                     <div class="form-control">
                         <label for="year">Year</label>
-                        <input type="text" name="year" id="year" placeholder="YYYY" inputmode="numeric" min="1"/>
+                        <input type="text" name="year" id="year" placeholder="YYYY" inputmode="numeric" min="1" />
                         <small></small>
                     </div>
                 </form>
                 <div class="calculate">
-                  <hr />
-                  <button type="button" class="calculate-btn" id="calc-btn"></button>
+                    <hr />
+                    <button type="button" class="calculate-btn" id="calc-btn"></button>
                 </div>
 
                 <div class="display">
@@ -40,6 +49,8 @@
                 </div>
             </div>
         </main>
-        <script src="./script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/date-fns@3.6.0/cdn.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/date-fns@3.6.0/locale/es/cdn.min.js"></script>
+        <script src="script.js"></script>
     </body>
 </html>
