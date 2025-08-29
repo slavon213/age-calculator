@@ -3,13 +3,18 @@ const dayInput = document.getElementById("day");
 const monthInput = document.getElementById("month");
 const yearInput = document.getElementById("year");
 const calculateButton = document.getElementById("calc-btn");
+
+const yearsDisplay = document.getElementById("show-years");
+const monthsDisplay = document.getElementById("show-months");
+const daysDisplay = document.getElementById("show-days");
+
 const today = new Date();
 const currentYear = today.getFullYear();
 
 formCalculator.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         e.preventDefault();
-        validateForm();
+        main();
     }
 });
 
@@ -36,12 +41,13 @@ const inRange = (min, max, message) => (value) => {
     }
     return message;
 };
-const isNotFutureYear = (year) => (Number(year) <= Number(currentYear)) ? true : "Must be in the past";
+const isNotFuture = (date) => (!dateFns.isFuture(date) ? true : "Must be in the past");
 
 const validatorsMap = {
     day: [isNotEmpty, inRange(1, 31, "Must be a valid day")],
     month: [isNotEmpty, inRange(1, 12, "Must be a valid month")],
-    year: [isNotEmpty, isNotFutureYear],
+    year: [isNotEmpty, isNotFuture],
+    date: [],
 };
 
 const addClass = (field, className) => {
@@ -65,6 +71,19 @@ const clearError = (input) => {
     smallElement.textContent = "";
 };
 
+const getDataFromInputs = () => {
+    const day = Number(dayInput.value);
+    const month = Number(monthInput.value);
+    const year = Number(yearInput.value);
+    const date = new Date(year, month - 1, day);
+    return {
+        day: day,
+        month: month,
+        year: year,
+        date: date,
+    };
+};
+
 const validateField = (input, fieldName) => {
     const value = input.value;
     const rules = validatorsMap[fieldName];
@@ -79,30 +98,55 @@ const validateField = (input, fieldName) => {
     return true;
 };
 
+const validateFullDate = (date) => {
+    const result = isNotFuture(date);
+    if (result !== true) {
+        showError(dayInput, result);
+        return false;
+    }
+    return true;
+};
+
 const validateForm = () => {
     const isDayValid = validateField(dayInput, "day");
     const isMonthValid = validateField(monthInput, "month");
     const isYearValid = validateField(yearInput, "year");
 
+    const { day, month, year, date } = getDataFromInputs();
     if (isDayValid && isMonthValid && isYearValid) {
-        const day = Number(dayInput.value);
-        const month = Number(monthInput.value);
-        const year = Number(yearInput.value);
-
-        const date = new Date(year, month - 1, day);
         if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
             showError(dayInput, "Must be a valid date");
             showError(monthInput, "");
             showError(yearInput, "");
         }
     }
-    return isDayValid && isMonthValid && isYearValid;
+    const isNotFutureDate = validateFullDate(date);
+    return isDayValid && isMonthValid && isYearValid && isNotFutureDate;
 };
 
 calculateButton.addEventListener("click", () => {
-    if (validateForm()) {
-        console.log("Everything is OK");
-    }
+    main();
 });
+
+const showResult = (years, months, days) => {
+    yearsDisplay.textContent = years ? years : "--";
+    monthsDisplay.textContent = months ? months : "--";
+    daysDisplay.textContent = days ? days : "--";
+};
+
+const clearResult = () => {
+    yearsDisplay.textContent = "--";
+    monthsDisplay.textContent = "--";
+    daysDisplay.textContent = "--";
+};
+
+const main = () => {
+    clearResult();
+    if (validateForm()) {
+        const { date } = getDataFromInputs();
+        const result = dateFns.intervalToDuration({ start: date, end: today });
+        showResult(result.years, result.months, result.days);
+    }
+};
 
 addClass(yearInput, "invalid");
