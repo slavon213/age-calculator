@@ -1,9 +1,17 @@
+const formCalculator = document.forms[0];
 const dayInput = document.getElementById("day");
 const monthInput = document.getElementById("month");
 const yearInput = document.getElementById("year");
 const calculateButton = document.getElementById("calc-btn");
 const today = new Date();
 const currentYear = today.getFullYear();
+
+formCalculator.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        validateForm();
+    }
+});
 
 function integerInput(value) {
     value = value.replace(/[^\d]+/g, "");
@@ -69,7 +77,6 @@ const validateForm = () => {
         const year = Number(yearInput.value);
 
         const date = new Date(year, month - 1, day);
-
         if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
             showError(dayInput, "Must be a valid date");
         }
