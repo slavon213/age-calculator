@@ -29,7 +29,6 @@ yearInput.addEventListener("input", function () {
 });
 
 const isNotEmpty = (value) => (value ? true : "This field is required");
-// const isPositive = (value) => (Number(value) > 0 ? true : "Must be in the past");
 const inRange = (min, max, message) => (value) => {
     const number = Number(value);
     if (number >= min && number <= max) {
@@ -37,7 +36,7 @@ const inRange = (min, max, message) => (value) => {
     }
     return message;
 };
-const isNotFutureYear = (year) => (!dateFns.isFuture(year) ? true : "Must be in the past");
+const isNotFutureYear = (year) => (Number(year) <= Number(currentYear)) ? true : "Must be in the past";
 
 const validatorsMap = {
     day: [isNotEmpty, inRange(1, 31, "Must be a valid day")],
@@ -45,11 +44,25 @@ const validatorsMap = {
     year: [isNotEmpty, isNotFutureYear],
 };
 
+const addClass = (field, className) => {
+    field.classList.add(className);
+};
+
+const removeClass = (field, className) => {
+    field.classList.remove(className);
+};
 const showError = (input, message) => {
     const parentElement = input.closest("div");
-    // parentElement.classList.toggle("")
+    addClass(parentElement, "invalid");
     const smallElement = parentElement.querySelector("small");
     smallElement.textContent = message;
+};
+
+const clearError = (input) => {
+    const parentElement = input.closest("div");
+    removeClass(parentElement, "invalid");
+    const smallElement = parentElement.querySelector("small");
+    smallElement.textContent = "";
 };
 
 const validateField = (input, fieldName) => {
@@ -62,7 +75,7 @@ const validateField = (input, fieldName) => {
             return false;
         }
     }
-    showError(input, "");
+    clearError(input);
     return true;
 };
 
@@ -79,6 +92,8 @@ const validateForm = () => {
         const date = new Date(year, month - 1, day);
         if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
             showError(dayInput, "Must be a valid date");
+            showError(monthInput, "");
+            showError(yearInput, "");
         }
     }
     return isDayValid && isMonthValid && isYearValid;
@@ -89,3 +104,5 @@ calculateButton.addEventListener("click", () => {
         console.log("Everything is OK");
     }
 });
+
+addClass(yearInput, "invalid");

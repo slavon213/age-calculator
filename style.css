@@ -123,10 +123,6 @@ input::placeholder {
     color: var(--color-smokey-grey);
 }
 
-small {
-    color: var(--color-light-red);
-}
-
 form {
     width: 100%;
     display: flex;
@@ -188,6 +184,25 @@ hr {
     flex-direction: column;
     gap: var(--spacing-100);
 }
+
+div.invalid {
+    /* color: var(--color-light-red); */
+    /* border-color: var(--color-light-red); */
+    label {
+
+    color: var(--color-light-red);
+    }
+
+    input {
+        border-color: var(--color-light-red);
+    }
+    small {
+    color: var(--color-light-red);
+        
+    }
+}
+
+
 
 @media (max-width: 843px) {
     .container {
