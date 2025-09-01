@@ -47,7 +47,6 @@ const validatorsMap = {
     day: [isNotEmpty, inRange(1, 31, "Must be a valid day")],
     month: [isNotEmpty, inRange(1, 12, "Must be a valid month")],
     year: [isNotEmpty, isNotFuture],
-    date: [],
 };
 
 const addClass = (field, className) => {
@@ -98,7 +97,7 @@ const validateField = (input, fieldName) => {
     return true;
 };
 
-const validateFullDate = (date) => {
+const isNotFutureFullDate = (date) => {
     const result = isNotFuture(date);
     if (result !== true) {
         showError(dayInput, result);
@@ -111,16 +110,17 @@ const validateForm = () => {
     const isDayValid = validateField(dayInput, "day");
     const isMonthValid = validateField(monthInput, "month");
     const isYearValid = validateField(yearInput, "year");
+    let isNotFutureDate = false;
 
-    const { day, month, year, date } = getDataFromInputs();
     if (isDayValid && isMonthValid && isYearValid) {
+        const { day, month, year, date } = getDataFromInputs();
         if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
             showError(dayInput, "Must be a valid date");
             showError(monthInput, "");
             showError(yearInput, "");
         }
+        isNotFutureDate = isNotFutureFullDate(date);
     }
-    const isNotFutureDate = validateFullDate(date);
     return isDayValid && isMonthValid && isYearValid && isNotFutureDate;
 };
 
