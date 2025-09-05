@@ -1,0 +1,23 @@
+
+.form-control {
+    min-width: 0;
+    flex: 0 1 160px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-100);
+}
+
+div.invalid {
+    label {
+
+    color: var(--color-light-red);
+    }
+
+    input {
+        border-color: var(--color-light-red);
+    }
+    small {
+    color: var(--color-light-red);
+        
+    }
+}
